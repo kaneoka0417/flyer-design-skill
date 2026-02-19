@@ -168,7 +168,7 @@ async function convertHtmlToPdf(inputPath, outputPath, options = {}) {
     await page.evaluateHandle('document.fonts.ready');
     
     // Additional wait for any async rendering
-    await page.waitForTimeout(1000);
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Generate PDF
     await page.pdf({

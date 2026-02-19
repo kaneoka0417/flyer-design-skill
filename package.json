@@ -1,0 +1,32 @@
+{
+  "name": "flyer-design-skill",
+  "version": "1.0.0",
+  "description": "Claude Code skill for designing Japanese flyers (chirashi) and generating print-ready PDFs",
+  "main": "scripts/html_to_pdf.js",
+  "scripts": {
+    "pdf": "node scripts/html_to_pdf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaneoka0417/flyer-design-skill.git"
+  },
+  "keywords": [
+    "claude-code-skill",
+    "flyer",
+    "chirashi",
+    "design",
+    "pdf",
+    "print",
+    "japanese"
+  ],
+  "author": "kaneoka0417",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kaneoka0417/flyer-design-skill/issues"
+  },
+  "homepage": "https://github.com/kaneoka0417/flyer-design-skill#readme",
+  "dependencies": {
+    "puppeteer": "^24.37.4"
+  }
+}

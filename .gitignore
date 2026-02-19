@@ -1,0 +1,8 @@
+node_modules/
+output/
+image/
+*.pdf
+.DS_Store
+
+# プロジェクト固有ファイル（スキルに含めない）
+*_提案資料*.md
