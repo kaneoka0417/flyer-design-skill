@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/kaneoka0417/flyer-design-skill#readme",
   "dependencies": {
-    "puppeteer": "^24.37.4"
+    "puppeteer": "^24.37.4",
+    "reveal.js": "^5.2.1"
   }
 }

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>[PROJECT_NAME] - チラシ（表面）</title>
+  <!--
+    パターン: ライトテーマ・両面（表面）
+    ゾーン構成: Top帯(7mm) → Hero(90mm) → Concept帯(7mm) → Features(35mm) → CTA(40mm) → Logo帯(7mm)
+    カラー: CSS変数で一括変更可能
+    アイコン: 全てインラインSVG（絵文字禁止）
+  -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@500;700;800;900&display=swap');
+
+    @page { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ========================================
+       カラー変数（ここを変更してテーマ調整）
+       ======================================== */
+    :root {
+      --accent: #C53D43;
+      --accent-dark: #A83035;
+      --bg-lightest: #FFFFFF;
+      --bg-light: #F8F7F4;
+      --bg-subtle: #F0F0F0;
+      --bg-dark: #1A2744;
+      --text-primary: #333333;
+      --text-secondary: #555555;
+      --text-muted: #888888;
+      --divider: #DDDDDD;
+    }
+
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      width: 210mm;
+      height: 297mm;
+      background: var(--bg-lightest);
+      color: var(--text-primary);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========================================
+       ZONE 0: トップ帯（ダークネイビー）~7mm
+       ======================================== */
+    .top-band {
+      background: var(--bg-dark);
+      color: #fff;
+      text-align: center;
+      padding: 2mm 8mm;
+      font-size: 10pt;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      flex-shrink: 0;
+    }
+
+    /* ========================================
+       ZONE 1: ヒーロー ~90mm
+       背景: var(--bg-light)
+       写真50% + テキスト50%
+       ======================================== */
+    .zone-hero {
+      background: var(--bg-light);
+      padding: 5mm 6mm 4mm 6mm;
+      display: flex;
+      gap: 5mm;
+      flex-shrink: 0;
+      height: 90mm;
+    }
+
+    .hero-photo {
+      width: 50%;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+    }
+
+    .hero-text {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3mm;
+    }
+    .hero-label {
+      font-size: 8pt;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .hero-catch-small {
+      font-size: 12pt;
+      font-weight: 700;
+      color: var(--text-secondary);
+      line-height: 1.3;
+    }
+    .hero-title {
+      font-size: 38pt;
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--bg-dark);
+    }
+    .hero-sub {
+      font-size: 13pt;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-secondary);
+    }
+    .hero-sub .accent {
+      color: var(--accent);
+      font-weight: 900;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5mm;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10pt;
+      font-weight: 700;
+      padding: 2mm 4mm;
+      align-self: flex-start;
+    }
+    .hero-badge svg {
+      width: 4.5mm;
+      height: 4.5mm;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ========================================
+       コンセプト帯（アクセント全幅）~7mm
+       ======================================== */
+    .concept-band {
+      background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+      color: #fff;
+      text-align: center;
+      padding: 2.5mm 5mm;
+      font-size: 13pt;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    /* ========================================
+       ZONE 2: 特徴 ~35mm
+       背景: var(--bg-subtle)
+       3つの特徴を全部違う見た目で表現
+       ======================================== */
+    .zone-features {
+      background: var(--bg-subtle);
+      padding: 4mm 6mm;
+      flex-shrink: 0;
+      height: 35mm;
+      display: flex;
+      flex-direction: column;
+    }
+    .heading-obi {
+      background: var(--accent);
+      color: #fff;
+      display: inline-block;
+      padding: 1mm 4mm;
+      font-size: 10pt;
+      font-weight: 900;
+      margin-bottom: 2.5mm;
+      align-self: flex-start;
+    }
+
+    /* 3つの特徴を薄い区切り線で分離 */
+    .features-row {
+      display: flex;
+      align-items: stretch;
+      flex: 1;
+    }
+    .features-row > *:not(:last-child) {
+      border-right: 0.3mm solid var(--divider);
+    }
+    .features-row > * {
+      flex: 1;
+      padding: 0 3mm;
+    }
+    .features-row > *:first-child {
+      padding-left: 0;
+    }
+    .features-row > *:last-child {
+      padding-right: 0;
+    }
+
+    /* 特徴1: 大きな数字がビジュアル主役 */
+    .feat-number {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+    }
+    .feat-number-value {
+      font-family: "Inter", sans-serif;
+      font-size: 28pt;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .feat-number-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5mm;
+    }
+
+    /* 特徴2: テキスト主役（中央揃え） */
+    .feat-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* 特徴3: アイコン+テキスト */
+    .feat-icon {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+    }
+    .feat-icon-svg {
+      width: 10mm;
+      height: 10mm;
+      flex-shrink: 0;
+    }
+    .feat-icon-svg svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .feat-icon-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5mm;
+    }
+
+    /* 共通スタイル */
+    .feat-title {
+      font-size: 11pt;
+      font-weight: 900;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 0.5mm;
+    }
+    .feat-desc {
+      font-size: 8pt;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .feat-title-accent {
+      font-size: 11pt;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1.2;
+      margin-bottom: 1mm;
+    }
+    .feat-desc-light {
+      font-size: 8pt;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ========================================
+       ZONE 3: CTA ~40mm
+       アクセントグラデーション + 価格 + QR
+       ======================================== */
+    .zone-cta {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      padding: 5mm 6mm;
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      flex: 1;
+      min-height: 0;
+    }
+    .cta-left { flex: 1; }
+    .cta-heading {
+      font-size: 16pt;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 1.5mm;
+    }
+    .cta-sub {
+      font-size: 9pt;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 3mm;
+      line-height: 1.4;
+    }
+    .cta-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 2mm;
+      margin-bottom: 1mm;
+    }
+    .cta-price-prefix {
+      font-size: 11pt;
+      font-weight: 700;
+      color: rgba(255,255,255,0.9);
+    }
+    .cta-price {
+      font-family: "Inter", sans-serif;
+      font-size: 36pt;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+    .cta-price-note {
+      font-size: 10pt;
+      color: rgba(255,255,255,0.8);
+    }
+    .cta-price-includes {
+      font-size: 9pt;
+      color: rgba(255,255,255,0.75);
+      margin-top: 0.5mm;
+    }
+    .cta-contact {
+      margin-top: 2mm;
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+    }
+    .cta-contact svg {
+      width: 4mm;
+      height: 4mm;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .cta-contact-text {
+      font-size: 9pt;
+      color: rgba(255,255,255,0.9);
+      font-weight: 500;
+    }
+    .cta-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2mm;
+      flex-shrink: 0;
+    }
+    .cta-qr {
+      width: 30mm;
+      height: 34mm;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 1.5mm;
+    }
+    .cta-qr img {
+      width: 24mm;
+      height: 24mm;
+    }
+    .cta-qr-label {
+      font-size: 7pt;
+      color: var(--bg-dark);
+      margin-top: 0.5mm;
+      font-weight: 700;
+    }
+    .cta-flip-note {
+      font-size: 7.5pt;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* ========================================
+       ロゴ帯（最下部）~7mm
+       ======================================== */
+    .logo-band {
+      background: var(--bg-dark);
+      padding: 2mm 6mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3mm;
+      flex-shrink: 0;
+    }
+    .logo-band .logo-img { height: 5.5mm; }
+    .logo-band .logo-text {
+      font-size: 7.5pt;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ZONE 0: トップ帯（ダークネイビー） -->
+  <div class="top-band">
+    [TOP_BAND_TEXT]
+  </div>
+
+  <!-- ZONE 1: ヒーロー（90mm） -- 写真+タイトル -->
+  <div class="zone-hero">
+    <div class="hero-photo">
+      <!-- 写真: object-fit: cover で切り抜き。object-position で調整 -->
+      <img src="[HERO_PHOTO_PATH]" alt="[HERO_PHOTO_ALT]">
+    </div>
+    <div class="hero-text">
+      <div class="hero-label">[ORGANIZATION_NAME]</div>
+      <div class="hero-catch-small">[SUB_CATCH]</div>
+      <div class="hero-title">[MAIN_TITLE]</div>
+      <div class="hero-sub">
+        [SUB_COPY_LINE_1]<br>
+        <span class="accent">[SUB_COPY_ACCENT]</span>[SUB_COPY_LINE_2]
+      </div>
+      <div class="hero-badge">
+        <!-- SVGアイコン: stroke style -->
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        [BADGE_TEXT]
+      </div>
+    </div>
+  </div>
+
+  <!-- コンセプト帯 -->
+  <div class="concept-band">
+    [CONCEPT_TEXT]
+  </div>
+
+  <!-- ZONE 2: 特徴（3つ全部違う見た目） -->
+  <div class="zone-features">
+    <div class="heading-obi">[FEATURES_HEADING]</div>
+    <div class="features-row">
+
+      <!-- 特徴1: 大きな数字がビジュアル主役 -->
+      <div class="feat-number">
+        <div class="feat-number-value">[FEATURE_1_NUM]</div>
+        <div class="feat-number-text">
+          <div class="feat-title">[FEATURE_1_TITLE]</div>
+          <div class="feat-desc">[FEATURE_1_DESC]</div>
+        </div>
+      </div>
+
+      <!-- 特徴2: テキスト主役 -->
+      <div class="feat-text">
+        <div class="feat-title-accent">[FEATURE_2_TITLE]</div>
+        <div class="feat-desc-light">[FEATURE_2_DESC]</div>
+      </div>
+
+      <!-- 特徴3: アイコン+テキスト -->
+      <div class="feat-icon">
+        <div class="feat-icon-svg">
+          <!-- SVGアイコン: stroke style -->
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="feat-icon-body">
+          <div class="feat-title">[FEATURE_3_TITLE]</div>
+          <div class="feat-desc">[FEATURE_3_DESC]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE 3: CTA（アクセントグラデーション + 価格 + QR） -->
+  <div class="zone-cta">
+    <div class="cta-left">
+      <div class="cta-heading">[CTA_HEADING]</div>
+      <div class="cta-sub">[CTA_SUB_TEXT]</div>
+      <div class="cta-price-row">
+        <div class="cta-price-prefix">[PRICE_PREFIX]</div>
+        <div class="cta-price">[PRICE]</div>
+        <div class="cta-price-note">[PRICE_NOTE]</div>
+      </div>
+      <div class="cta-price-includes">[PRICE_INCLUDES]</div>
+      <div class="cta-contact">
+        <!-- 電話アイコン -->
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span class="cta-contact-text">[CONTACT_PHONE]</span>
+      </div>
+    </div>
+    <div class="cta-right">
+      <div class="cta-qr">
+        <img src="[QR_CODE_PATH]" alt="QR">
+        <div class="cta-qr-label">[QR_LABEL]</div>
+      </div>
+      <div class="cta-flip-note">[FLIP_NOTE]</div>
+    </div>
+  </div>
+
+  <!-- ロゴ帯 -->
+  <div class="logo-band">
+    <img src="[LOGO_PATH]" alt="[ORGANIZATION_NAME]" class="logo-img">
+    <span class="logo-text">[LOGO_TEXT]</span>
+  </div>
+
+</body>
+</html>

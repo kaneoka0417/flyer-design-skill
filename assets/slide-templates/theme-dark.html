@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[PRESENTATION TITLE] - Dark Theme</title>
+
+  <!-- Google Fonts: Noto Sans JP + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Reveal.js core CSS -->
+  <link rel="stylesheet" href="../../node_modules/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="../../node_modules/reveal.js/dist/reveal.css">
+
+  <!-- Print-pdf stylesheet for high-quality PDF export -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi)
+      ? '../../node_modules/reveal.js/css/print/pdf.css'
+      : '../../node_modules/reveal.js/css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+
+  <style>
+    /* =============================================
+       CSS Variables for Theme Customization
+       ============================================= */
+    :root {
+      --accent: #D4920B;
+      --bg-primary: #1A2744;
+      --bg-secondary: #0F1A2E;
+      --text-primary: #F8F7F4;
+      --text-secondary: #B0BEC5;
+      --font-heading: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+      --font-body: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+      --font-number: 'Inter', 'Noto Sans JP', sans-serif;
+    }
+
+    /* =============================================
+       Reveal.js Theme Overrides
+       ============================================= */
+    .reveal-viewport {
+      background: var(--bg-primary);
+    }
+
+    .reveal {
+      font-family: var(--font-body);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--text-primary);
+    }
+
+    .reveal .slides {
+      text-align: left;
+    }
+
+    .reveal .slides section {
+      padding: 60px 80px;
+      box-sizing: border-box;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      color: var(--text-primary);
+      text-transform: none;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.4em;
+    }
+
+    .reveal h1 { font-size: 56px; font-weight: 900; }
+    .reveal h2 { font-size: 44px; }
+    .reveal h3 { font-size: 32px; }
+    .reveal h4 { font-size: 24px; color: var(--text-secondary); }
+
+    .reveal p {
+      font-size: 22px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 0.8em;
+    }
+
+    .reveal ul, .reveal ol {
+      font-size: 20px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .reveal li {
+      margin-bottom: 0.4em;
+    }
+
+    /* =============================================
+       Slide Type Layouts
+       ============================================= */
+
+    /* --- Type 1: Title Slide --- */
+    .slide-title {
+      background: var(--bg-secondary);
+      text-align: left;
+    }
+    .slide-title .logo-area {
+      width: 120px;
+      height: 120px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .slide-title .logo-area svg {
+      width: 60px;
+      height: 60px;
+      fill: var(--bg-secondary);
+    }
+    .slide-title h1 {
+      font-size: 64px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+    .slide-title .subtitle {
+      font-size: 26px;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+    .slide-title .meta {
+      font-size: 16px;
+      color: var(--text-secondary);
+      opacity: 0.7;
+    }
+
+    /* --- Type 2: Section Divider --- */
+    .slide-divider {
+      background: var(--accent) !important;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+    .slide-divider h2 {
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--bg-secondary);
+    }
+    .slide-divider p {
+      font-size: 22px;
+      color: var(--bg-secondary);
+      opacity: 0.8;
+    }
+
+    /* --- Type 3: Text + Image (50/50 split) --- */
+    .slide-text-image {
+      padding: 0 !important;
+      flex-direction: row !important;
+    }
+    .slide-text-image .text-half {
+      flex: 1;
+      padding: 60px 60px 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-text-image .image-half {
+      flex: 1;
+      background-color: var(--bg-secondary);
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100%;
+    }
+    .slide-text-image .image-half .placeholder-img {
+      width: 80%;
+      height: 60%;
+      background: rgba(255,255,255,0.05);
+      border: 2px dashed rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    /* --- Type 4: Full-bleed Image --- */
+    .slide-fullbleed {
+      padding: 0 !important;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .slide-fullbleed .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,26,46,0.85) 0%, rgba(15,26,46,0.4) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px 80px;
+    }
+    .slide-fullbleed h2 {
+      font-size: 52px;
+      font-weight: 900;
+    }
+    .slide-fullbleed p {
+      font-size: 22px;
+      color: var(--text-primary);
+      opacity: 0.9;
+      max-width: 60%;
+    }
+
+    /* --- Type 5: Number Emphasis --- */
+    .slide-number {
+      text-align: center;
+      align-items: center;
+    }
+    .slide-number .big-number {
+      font-family: var(--font-number);
+      font-size: 160px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .slide-number .number-unit {
+      font-family: var(--font-number);
+      font-size: 48px;
+      font-weight: 500;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+    .slide-number .number-desc {
+      font-size: 24px;
+      color: var(--text-secondary);
+      margin-top: 20px;
+      max-width: 600px;
+    }
+
+    /* --- Type 6: Comparison / 2-Column --- */
+    .slide-comparison .columns {
+      display: flex;
+      gap: 60px;
+      flex: 1;
+      align-items: stretch;
+    }
+    .slide-comparison .col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .slide-comparison .col-header {
+      font-family: var(--font-heading);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--accent);
+      margin-bottom: 24px;
+    }
+    .slide-comparison .col ul {
+      list-style: none;
+      padding: 0;
+    }
+    .slide-comparison .col li {
+      font-size: 20px;
+      color: var(--text-secondary);
+      padding: 8px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .slide-comparison .col li svg {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .slide-comparison .divider {
+      width: 1px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* --- Type 7: Flow / Steps --- */
+    .slide-flow .steps {
+      display: flex;
+      gap: 32px;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide-flow .step {
+      flex: 1;
+      text-align: center;
+      max-width: 280px;
+    }
+    .slide-flow .step-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(212,146,11,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .slide-flow .step-icon svg {
+      width: 36px;
+      height: 36px;
+      fill: var(--accent);
+    }
+    .slide-flow .step-num {
+      font-family: var(--font-number);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .slide-flow .step h4 {
+      font-size: 22px;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .slide-flow .step p {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+    .slide-flow .step-arrow {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .slide-flow .step-arrow svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--text-secondary);
+      opacity: 0.4;
+    }
+
+    /* --- Type 8: Quote / Key Message --- */
+    .slide-quote {
+      text-align: center;
+      align-items: center;
+    }
+    .slide-quote .quote-icon {
+      margin-bottom: 24px;
+    }
+    .slide-quote .quote-icon svg {
+      width: 48px;
+      height: 48px;
+      fill: var(--accent);
+      opacity: 0.5;
+    }
+    .slide-quote blockquote {
+      font-family: var(--font-heading);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.5;
+      max-width: 800px;
+      margin: 0 auto;
+      border: none;
+      padding: 0;
+      background: none;
+      box-shadow: none;
+    }
+    .slide-quote .attribution {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-top: 32px;
+    }
+
+    /* --- Type 9: CTA / Closing --- */
+    .slide-cta {
+      background: var(--bg-secondary);
+      text-align: center;
+      align-items: center;
+    }
+    .slide-cta h2 {
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+    .slide-cta .cta-desc {
+      font-size: 22px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin-bottom: 40px;
+    }
+    .slide-cta .cta-button {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--bg-secondary);
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      padding: 16px 48px;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      margin-bottom: 48px;
+    }
+    .slide-cta .contact-info {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 2;
+    }
+    .slide-cta .contact-info span {
+      display: block;
+    }
+
+    /* =============================================
+       Print PDF overrides
+       ============================================= */
+    @media print {
+      .reveal .slides section {
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ============================
+           SLIDE 1: Title Slide
+           ============================ -->
+      <section class="slide-title">
+        <div class="logo-area">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <h1>[PRESENTATION TITLE]</h1>
+        <p class="subtitle">[SUBTITLE OR TAGLINE GOES HERE]</p>
+        <p class="meta">[PRESENTER NAME] | [DATE] | [COMPANY / ORGANIZATION]</p>
+      </section>
+
+      <!-- ============================
+           SLIDE 2: Section Divider
+           ============================ -->
+      <section class="slide-divider">
+        <h2>[SECTION TITLE]</h2>
+        <p>[Brief description of this section]</p>
+      </section>
+
+      <!-- ============================
+           SLIDE 3: Text + Image (50/50)
+           ============================ -->
+      <section class="slide-text-image">
+        <div class="text-half">
+          <h3>[SLIDE HEADING]</h3>
+          <p>[Main body text goes here. Explain the key point of this slide with supporting detail and context for the audience.]</p>
+          <ul>
+            <li>[KEY POINT ONE]</li>
+            <li>[KEY POINT TWO]</li>
+            <li>[KEY POINT THREE]</li>
+          </ul>
+        </div>
+        <div class="image-half">
+          <div class="placeholder-img">[IMAGE PLACEHOLDER]</div>
+        </div>
+      </section>
+
+      <!-- ============================
+           SLIDE 4: Full-bleed Image
+           ============================ -->
+      <section class="slide-fullbleed" style="background-image: url('[IMAGE_URL]'); background-color: var(--bg-secondary);">
+        <div class="overlay">
+          <h2>[HEADLINE OVER IMAGE]</h2>
+          <p>[Supporting text that overlays the full-bleed background image.]</p>
+        </div>
+      </section>
+
+      <!-- ============================
+           SLIDE 5: Number Emphasis
+           ============================ -->
+      <section class="slide-number">
+        <div>
+          <div class="big-number">[000]</div>
+          <div class="number-unit">[UNIT / LABEL]</div>
+          <p class="number-desc">[Explanation of what this number represents and why it matters to the audience.]</p>
+        </div>
+      </section>
+
+      <!-- ============================
+           SLIDE 6: Comparison / 2-Column
+           ============================ -->
+      <section class="slide-comparison">
+        <h3>[COMPARISON HEADING]</h3>
+        <div class="columns">
+          <div class="col">
+            <div class="col-header">[OPTION A]</div>
+            <ul>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#D4920B" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#D4920B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                [Feature or benefit one]
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#D4920B" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#D4920B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                [Feature or benefit two]
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#D4920B" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#D4920B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                [Feature or benefit three]
+              </li>
+            </ul>
+          </div>
+          <div class="divider"></div>
+          <div class="col">
+            <div class="col-header">[OPTION B]</div>
+            <ul>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#D4920B" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#D4920B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                [Feature or benefit one]
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#D4920B" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#D4920B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                [Feature or benefit two]
+              </li>
+              <li>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="7" stroke="#D4920B" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#D4920B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                [Feature or benefit three]
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+           SLIDE 7: Flow / Steps
+           ============================ -->
+      <section class="slide-flow">
+        <h3>[PROCESS HEADING]</h3>
+        <div class="steps">
+          <div class="step">
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="step-num">Step 01</div>
+            <h4>[STEP TITLE]</h4>
+            <p>[Brief description of this step.]</p>
+          </div>
+          <div class="step-arrow">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="step">
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="step-num">Step 02</div>
+            <h4>[STEP TITLE]</h4>
+            <p>[Brief description of this step.]</p>
+          </div>
+          <div class="step-arrow">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="step">
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="step-num">Step 03</div>
+            <h4>[STEP TITLE]</h4>
+            <p>[Brief description of this step.]</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================
+           SLIDE 8: Quote / Key Message
+           ============================ -->
+      <section class="slide-quote">
+        <div class="quote-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 11H6a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 011 1v7c0 2.5-2 4-4 4M20 11h-4a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 011 1v7c0 2.5-2 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <blockquote>[KEY MESSAGE OR QUOTE TEXT GOES HERE. MAKE IT IMPACTFUL AND MEMORABLE.]</blockquote>
+        <p class="attribution">-- [ATTRIBUTION / SOURCE]</p>
+      </section>
+
+      <!-- ============================
+           SLIDE 9: CTA / Closing
+           ============================ -->
+      <section class="slide-cta">
+        <h2>[CALL TO ACTION]</h2>
+        <p class="cta-desc">[Closing message that motivates the audience to take the next step.]</p>
+        <a href="#" class="cta-button">[ACTION LABEL]</a>
+        <div class="contact-info">
+          <span>[CONTACT NAME]</span>
+          <span>[EMAIL ADDRESS]</span>
+          <span>[PHONE NUMBER]</span>
+          <span>[WEBSITE URL]</span>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js -->
+  <script src="../../node_modules/reveal.js/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1920,
+      height: 1080,
+      margin: 0,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      controls: true,
+      progress: true,
+      center: false,
+      transition: 'slide',
+      backgroundTransition: 'fade',
+      // PDF export settings
+      pdfMaxPagesPerSlide: 1,
+      pdfSeparateFragments: false,
+    });
+  </script>
+</body>
+</html>

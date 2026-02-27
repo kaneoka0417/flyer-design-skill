@@ -6,3 +6,10 @@ image/
 
 # プロジェクト固有ファイル（スキルに含めない）
 *_提案資料*.md
+sources/
+references/chirasi-examples/
+
+# ローカル環境固有
+.serena/
+.claude/
+CLAUDE.md

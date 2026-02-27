@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>[PROJECT_NAME] - チラシ（裏面）</title>
+  <!--
+    パターン: ダークテーマ・両面（裏面）
+    ゾーン構成: Top帯(~7mm) → Pain Points(~45mm) → Flow(~70mm) → Details(~80mm) → CTA(~35mm) → Logo帯(~7mm)
+    カラー: CSS変数で一括変更可能
+    アイコン: 全てインラインSVG（絵文字禁止）
+    備考: 表面（pattern-dark-double-front.html）と対で使用
+  -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@500;700;800;900&display=swap');
+
+    @page { size: A4; margin: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ========================================
+       カラー変数（ここを変更してテーマ調整）
+       ======================================== */
+    :root {
+      --accent: #D4920B;
+      --accent-dark: #B87A08;
+      --bg-darkest: #0D1117;
+      --bg-mid: #161B22;
+      --bg-light: #1C2129;
+      --bg-logo: #0A0E13;
+      --text-primary: #E6EDF3;
+      --text-secondary: #C9D1D9;
+      --text-muted: #8B949E;
+      --divider: #30363D;
+    }
+
+    body {
+      font-family: "Noto Sans JP", sans-serif;
+      width: 210mm;
+      height: 297mm;
+      background: var(--bg-darkest);
+      color: var(--text-primary);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ========================================
+       ZONE 0: アクセント帯（トップ）~7mm
+       裏面ラベル付き
+       ======================================== */
+    .top-band {
+      background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+      color: #fff;
+      padding: 2mm 8mm;
+      font-size: 10pt;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .top-band-main {
+      flex: 1;
+      text-align: center;
+    }
+    .top-band-label {
+      font-size: 7.5pt;
+      font-weight: 700;
+      opacity: 0.85;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 1mm;
+    }
+    .top-band-label svg {
+      width: 3.5mm;
+      height: 3.5mm;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ========================================
+       共通パーツ
+       ======================================== */
+    .heading-obi {
+      background: var(--accent);
+      color: #fff;
+      display: inline-block;
+      padding: 1mm 4mm;
+      font-size: 10pt;
+      font-weight: 900;
+      margin-bottom: 3mm;
+    }
+
+    /* ========================================
+       ZONE 1: ペインポイント ~45mm
+       背景: var(--bg-mid)
+       3-4つの課題を左アクセントライン付きで表示
+       ======================================== */
+    .zone-pain {
+      background: var(--bg-mid);
+      padding: 4mm 6mm;
+      flex-shrink: 0;
+      height: 45mm;
+      display: flex;
+      flex-direction: column;
+    }
+    .pain-heading-row {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+      margin-bottom: 3mm;
+    }
+    .pain-heading-text {
+      font-size: 13pt;
+      font-weight: 900;
+      color: #fff;
+    }
+    .pain-heading-sub {
+      font-size: 8pt;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .pain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5mm 6mm;
+      flex: 1;
+      min-height: 0;
+    }
+    .pain-item {
+      display: flex;
+      align-items: stretch;
+      gap: 2.5mm;
+    }
+    .pain-accent-line {
+      width: 1mm;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .pain-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.3mm;
+    }
+    .pain-num {
+      font-family: "Inter", sans-serif;
+      font-size: 7pt;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .pain-title {
+      font-size: 10pt;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.25;
+    }
+    .pain-desc {
+      font-size: 7.5pt;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* ========================================
+       ZONE 2: フロー ~70mm
+       背景: var(--bg-light)（明確に色が変わる）
+       4ステップ + 画像
+       ======================================== */
+    .zone-flow {
+      background: var(--bg-light);
+      padding: 4mm 6mm;
+      flex-shrink: 0;
+      height: 70mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .flow-strip {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      flex: 1;
+      min-height: 0;
+    }
+    .flow-step {
+      flex: 1;
+      text-align: center;
+      padding: 1.5mm;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .flow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      right: -1mm;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 2.5mm solid var(--accent);
+      border-top: 2.5mm solid transparent;
+      border-bottom: 2.5mm solid transparent;
+      z-index: 1;
+    }
+    .flow-step-num {
+      font-family: "Inter", sans-serif;
+      font-size: 18pt;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 1mm;
+    }
+    .flow-step-label {
+      background: var(--accent);
+      color: #fff;
+      font-size: 7pt;
+      font-weight: 700;
+      padding: 0.5mm 3mm;
+      display: inline-block;
+      margin-bottom: 1.5mm;
+    }
+    .flow-step-img {
+      width: 30mm;
+      height: 20mm;
+      margin: 0 auto 1.5mm auto;
+    }
+    .flow-step-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .flow-step-title {
+      font-size: 10pt;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.5mm;
+    }
+    .flow-step-desc {
+      font-size: 7pt;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* ========================================
+       ZONE 3: 詳細 ~80mm
+       背景: var(--bg-mid)
+       アイテムリスト + 情報テーブル
+       ======================================== */
+    .zone-details {
+      background: var(--bg-mid);
+      padding: 4mm 6mm;
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 3mm;
+    }
+
+    /* アイテムリスト */
+    .details-items-section {
+      display: flex;
+      flex-direction: column;
+    }
+    .items-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5mm 4mm;
+    }
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+    }
+    .item-bullet {
+      width: 2mm;
+      height: 2mm;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .item-name {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #fff;
+    }
+    .item-desc {
+      font-size: 7pt;
+      color: var(--text-muted);
+      margin-left: 0.5mm;
+    }
+
+    /* 情報テーブル */
+    .details-table-section {
+      display: flex;
+      flex-direction: column;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .info-table tr:not(:last-child) {
+      border-bottom: 0.3mm solid var(--divider);
+    }
+    .info-table th {
+      text-align: left;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: var(--accent);
+      padding: 1.5mm 2mm 1.5mm 0;
+      width: 30mm;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+    .info-table th svg {
+      width: 3.5mm;
+      height: 3.5mm;
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vertical-align: middle;
+      margin-right: 1mm;
+    }
+    .info-table td {
+      font-size: 8.5pt;
+      color: var(--text-secondary);
+      padding: 1.5mm 0;
+      line-height: 1.4;
+      vertical-align: top;
+    }
+    .info-table td strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* ========================================
+       ZONE 4: CTA ~35mm
+       背景: アクセントグラデーション
+       連絡先 + QR
+       ======================================== */
+    .zone-cta {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      padding: 4mm 6mm;
+      display: flex;
+      align-items: center;
+      gap: 4mm;
+      flex-shrink: 0;
+      height: 35mm;
+    }
+    .cta-left { flex: 1; }
+    .cta-heading {
+      font-size: 14pt;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 2mm;
+    }
+    .cta-contact-row {
+      display: flex;
+      gap: 5mm;
+      align-items: flex-start;
+    }
+    .cta-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5mm;
+    }
+    .cta-contact-item svg {
+      width: 4mm;
+      height: 4mm;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .cta-contact-label {
+      font-size: 7pt;
+      color: rgba(255,255,255,0.7);
+      font-weight: 500;
+    }
+    .cta-contact-value {
+      font-family: "Inter", sans-serif;
+      font-size: 10pt;
+      font-weight: 700;
+      color: #fff;
+    }
+    .cta-contact-detail {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3mm;
+    }
+    .cta-note {
+      font-size: 7.5pt;
+      color: rgba(255,255,255,0.75);
+      margin-top: 1.5mm;
+      line-height: 1.35;
+    }
+
+    .cta-qr {
+      width: 25mm;
+      height: 25mm;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 1.5mm;
+    }
+    .cta-qr img {
+      width: 19mm;
+      height: 19mm;
+    }
+    .cta-qr-label {
+      font-size: 6.5pt;
+      color: var(--bg-darkest);
+      margin-top: 0.5mm;
+      font-weight: 700;
+    }
+
+    /* ========================================
+       ロゴ帯（最下部）~7mm
+       ======================================== */
+    .logo-band {
+      background: var(--bg-logo);
+      padding: 2mm 6mm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3mm;
+      flex-shrink: 0;
+    }
+    .logo-band .logo-img { height: 5.5mm; }
+    .logo-band .logo-text {
+      font-size: 7.5pt;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ZONE 0: アクセント帯（裏面ラベル付き） -->
+  <div class="top-band">
+    <div class="top-band-main">[TOP_BAND_TEXT]</div>
+    <div class="top-band-label">
+      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      DETAILS
+    </div>
+  </div>
+
+  <!-- ZONE 1: ペインポイント（課題提起） -->
+  <div class="zone-pain">
+    <div class="pain-heading-row">
+      <div class="heading-obi">[PAIN_HEADING]</div>
+      <div class="pain-heading-sub">[PAIN_HEADING_SUB]</div>
+    </div>
+    <div class="pain-grid">
+
+      <!-- ペインポイント1 -->
+      <div class="pain-item">
+        <div class="pain-accent-line"></div>
+        <div class="pain-body">
+          <div class="pain-num">01</div>
+          <div class="pain-title">[PAIN_1_TITLE]</div>
+          <div class="pain-desc">[PAIN_1_DESC]</div>
+        </div>
+      </div>
+
+      <!-- ペインポイント2 -->
+      <div class="pain-item">
+        <div class="pain-accent-line"></div>
+        <div class="pain-body">
+          <div class="pain-num">02</div>
+          <div class="pain-title">[PAIN_2_TITLE]</div>
+          <div class="pain-desc">[PAIN_2_DESC]</div>
+        </div>
+      </div>
+
+      <!-- ペインポイント3 -->
+      <div class="pain-item">
+        <div class="pain-accent-line"></div>
+        <div class="pain-body">
+          <div class="pain-num">03</div>
+          <div class="pain-title">[PAIN_3_TITLE]</div>
+          <div class="pain-desc">[PAIN_3_DESC]</div>
+        </div>
+      </div>
+
+      <!-- ペインポイント4 -->
+      <div class="pain-item">
+        <div class="pain-accent-line"></div>
+        <div class="pain-body">
+          <div class="pain-num">04</div>
+          <div class="pain-title">[PAIN_4_TITLE]</div>
+          <div class="pain-desc">[PAIN_4_DESC]</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE 2: フロー（4ステップ + 画像） -->
+  <div class="zone-flow">
+    <div class="heading-obi">[FLOW_HEADING]</div>
+    <div class="flow-strip">
+
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-label">[STEP_1_LABEL]</div>
+        <div class="flow-step-img"><img src="[STEP_1_IMG]" alt=""></div>
+        <div class="flow-step-title">[STEP_1_TITLE]</div>
+        <div class="flow-step-desc">[STEP_1_DESC]</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-label">[STEP_2_LABEL]</div>
+        <div class="flow-step-img"><img src="[STEP_2_IMG]" alt=""></div>
+        <div class="flow-step-title">[STEP_2_TITLE]</div>
+        <div class="flow-step-desc">[STEP_2_DESC]</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-label">[STEP_3_LABEL]</div>
+        <div class="flow-step-img"><img src="[STEP_3_IMG]" alt=""></div>
+        <div class="flow-step-title">[STEP_3_TITLE]</div>
+        <div class="flow-step-desc">[STEP_3_DESC]</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-step-num">4</div>
+        <div class="flow-step-label">[STEP_4_LABEL]</div>
+        <div class="flow-step-img"><img src="[STEP_4_IMG]" alt=""></div>
+        <div class="flow-step-title">[STEP_4_TITLE]</div>
+        <div class="flow-step-desc">[STEP_4_DESC]</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ZONE 3: 詳細（アイテムリスト + 情報テーブル） -->
+  <div class="zone-details">
+
+    <!-- アイテムリスト -->
+    <div class="details-items-section">
+      <div class="heading-obi">[ITEMS_HEADING]</div>
+      <div class="items-list">
+        <div class="item">
+          <div class="item-bullet"></div>
+          <span class="item-name">[ITEM_1]</span>
+          <span class="item-desc">-- [ITEM_1_DESC]</span>
+        </div>
+        <div class="item">
+          <div class="item-bullet"></div>
+          <span class="item-name">[ITEM_2]</span>
+          <span class="item-desc">-- [ITEM_2_DESC]</span>
+        </div>
+        <div class="item">
+          <div class="item-bullet"></div>
+          <span class="item-name">[ITEM_3]</span>
+          <span class="item-desc">-- [ITEM_3_DESC]</span>
+        </div>
+        <div class="item">
+          <div class="item-bullet"></div>
+          <span class="item-name">[ITEM_4]</span>
+          <span class="item-desc">-- [ITEM_4_DESC]</span>
+        </div>
+        <div class="item">
+          <div class="item-bullet"></div>
+          <span class="item-name">[ITEM_5]</span>
+          <span class="item-desc">-- [ITEM_5_DESC]</span>
+        </div>
+        <div class="item">
+          <div class="item-bullet"></div>
+          <span class="item-name">[ITEM_6]</span>
+          <span class="item-desc">-- [ITEM_6_DESC]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 情報テーブル -->
+    <div class="details-table-section">
+      <div class="heading-obi">[TABLE_HEADING]</div>
+      <table class="info-table">
+        <tr>
+          <th>
+            <!-- SVGアイコン: 場所 -->
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            [TABLE_ROW_1_LABEL]
+          </th>
+          <td>[TABLE_ROW_1_VALUE]</td>
+        </tr>
+        <tr>
+          <th>
+            <!-- SVGアイコン: 時計 -->
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            [TABLE_ROW_2_LABEL]
+          </th>
+          <td>[TABLE_ROW_2_VALUE]</td>
+        </tr>
+        <tr>
+          <th>
+            <!-- SVGアイコン: カレンダー -->
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            [TABLE_ROW_3_LABEL]
+          </th>
+          <td>[TABLE_ROW_3_VALUE]</td>
+        </tr>
+        <tr>
+          <th>
+            <!-- SVGアイコン: 円マーク -->
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            [TABLE_ROW_4_LABEL]
+          </th>
+          <td><strong>[TABLE_ROW_4_VALUE]</strong></td>
+        </tr>
+        <tr>
+          <th>
+            <!-- SVGアイコン: ユーザー -->
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            [TABLE_ROW_5_LABEL]
+          </th>
+          <td>[TABLE_ROW_5_VALUE]</td>
+        </tr>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ZONE 4: CTA（連絡先+QR） -->
+  <div class="zone-cta">
+    <div class="cta-left">
+      <div class="cta-heading">[CTA_HEADING]</div>
+      <div class="cta-contact-row">
+
+        <div class="cta-contact-item">
+          <!-- SVGアイコン: 電話 -->
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div class="cta-contact-detail">
+            <div class="cta-contact-label">TEL</div>
+            <div class="cta-contact-value">[PHONE_NUMBER]</div>
+          </div>
+        </div>
+
+        <div class="cta-contact-item">
+          <!-- SVGアイコン: メール -->
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div class="cta-contact-detail">
+            <div class="cta-contact-label">MAIL</div>
+            <div class="cta-contact-value">[EMAIL_ADDRESS]</div>
+          </div>
+        </div>
+
+        <div class="cta-contact-item">
+          <!-- SVGアイコン: ウェブ -->
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <div class="cta-contact-detail">
+            <div class="cta-contact-label">WEB</div>
+            <div class="cta-contact-value">[WEBSITE_URL]</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="cta-note">[CTA_NOTE]</div>
+    </div>
+    <div class="cta-qr">
+      <img src="[QR_CODE_PATH]" alt="QR">
+      <div class="cta-qr-label">[QR_LABEL]</div>
+    </div>
+  </div>
+
+  <!-- ロゴ帯 -->
+  <div class="logo-band">
+    <img src="[LOGO_PATH]" alt="[ORGANIZATION_NAME]" class="logo-img">
+    <span class="logo-text">[LOGO_TEXT]</span>
+  </div>
+
+</body>
+</html>

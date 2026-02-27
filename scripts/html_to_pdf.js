@@ -85,16 +85,16 @@ function convertWithGhostscript(inputPdf, outputPdf) {
     '-dSAFER',
     '-sDEVICE=pdfwrite',
     '-dCompatibilityLevel=1.3',      // PDF 1.3 for max compatibility
-    '-dPDFSETTINGS=/printer',        // Printer quality preset
+    '-dPDFSETTINGS=/prepress',        // Prepress quality (highest)
     '-dNoOutputFonts',               // ★ KEY: Convert all text to outlines
     // Image resolution settings
-    '-dColorImageResolution=300',
-    '-dGrayImageResolution=300',
+    '-dColorImageResolution=600',
+    '-dGrayImageResolution=600',
     '-dMonoImageResolution=1200',
-    // Downsample settings
-    '-dDownsampleColorImages=true',
-    '-dDownsampleGrayImages=true',
-    '-dDownsampleMonoImages=true',
+    // Downsample settings - disabled for max quality
+    '-dDownsampleColorImages=false',
+    '-dDownsampleGrayImages=false',
+    '-dDownsampleMonoImages=false',
     // Color settings
     '-dColorConversionStrategy=/LeaveColorUnchanged',
     // Additional settings
@@ -155,7 +155,7 @@ async function convertHtmlToPdf(inputPath, outputPath, options = {}) {
     await page.setViewport({
       width: Math.round(pageSize.width * 96 / 25.4),
       height: Math.round(pageSize.height * 96 / 25.4),
-      deviceScaleFactor: 1
+      deviceScaleFactor: 2
     });
     
     // Load HTML file
