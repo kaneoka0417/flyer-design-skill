@@ -123,6 +123,22 @@ description: プレゼンテーションスライドのデザイン・作成・P
 - 構成案の要件に対して候補が足りない場合、**具体的なシチュエーション・撮影指示**を提示する
 - フリー素材で補う場合は `references/icons-images.md` の推奨サイトから選定する
 
+#### 3.4 AI画像生成の提案（nano-banana）
+
+素材が不足している場合、またはスライド全面背景や抽象ビジュアルが必要な場合、nano-banana によるAI画像生成を提案できる。
+
+**提案タイミング:**
+- ユーザーが写真を持っていない場合
+- フルブリード背景（Type 4）に適した画像がない場合
+- ブランド統一感のある素材セットが必要な場合
+
+**必ずユーザーに確認してから生成する。** 詳細は `skills/nano-banana/SKILL.md` を参照。
+
+**スライド用の注意:**
+- フルブリード背景: 2K + 16:9 アスペクト比で十分
+- 半面画像: 1K-2K + flash で十分
+- テキストオーバーレイ部分に空間がある構図を指示すること
+
 **出力**: 選定結果を `output/[project]/slide-composition.md` のビジュアル要件に反映
 
 ### Step 4: Reveal.js + HTML/CSS実装
@@ -236,3 +252,4 @@ node scripts/slides_to_pdf.js presentation.html output.pdf
 - `references/typography.md` - 日本語タイポグラフィ・Inter font
 - `assets/slide-templates/` - テーマテンプレート（ダーク/ライト）
 - `scripts/slides_to_pdf.js` - PDF生成スクリプト（高画質設定済み）
+- `skills/nano-banana/SKILL.md` - AI画像生成ガイド（写真不足時の代替手段）

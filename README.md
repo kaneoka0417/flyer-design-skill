@@ -9,6 +9,7 @@
 | **chirashi-design** | チラシ（フライヤー）のデザイン・作成・PDF出力 | `/chirashi-design` |
 | **slide-design** | プレゼンスライドのデザイン・作成・PDF出力 | `/slide-design` |
 | **agent-team** | 並列マルチエージェント運用ガイド | `/agent-team` |
+| **nano-banana** | AI画像生成（チラシ・スライド用素材） | `nano-banana "prompt"` (CLI) |
 
 ## インストール
 
@@ -87,7 +88,8 @@ node scripts/slides_to_pdf.js presentation.html output.pdf --size 4:3
 skills/
   ├── chirashi-design/SKILL.md          # チラシデザインスキル定義
   ├── slide-design/SKILL.md             # スライドデザインスキル定義
-  └── agent-team/SKILL.md               # Agent Team運用スキル定義
+  ├── agent-team/SKILL.md               # Agent Team運用スキル定義
+  └── nano-banana/SKILL.md              # AI画像生成スキル（nano-banana CLI）
 references/
   ├── chirashi-design-system.md         # CORE: チラシデザインの全ルール（必読）
   ├── slide-design-system.md            # CORE: スライドデザインの全ルール（必読）
@@ -118,6 +120,8 @@ scripts/
 - [Claude Code](https://claude.ai/claude-code)
 - Node.js 18+
 - Ghostscript（印刷互換PDF出力に必須）
+- Bun + Gemini API Key（nano-banana AI画像生成に必要）
+- FFmpeg + ImageMagick（透過背景機能に必要、任意）
 
 ## ライセンス
 
