@@ -124,7 +124,7 @@ function convertWithGhostscript(inputPdf, outputPdf) {
  * Main conversion function
  */
 async function convertHtmlToPdf(inputPath, outputPath, options = {}) {
-  const { size = 'A4', useGhostscript = true } = options;
+  const { size = 'A4', useGhostscript = true, scale = 2 } = options;
   
   const absoluteInput = path.resolve(inputPath);
   
@@ -142,6 +142,7 @@ async function convertHtmlToPdf(inputPath, outputPath, options = {}) {
   
   console.log(`Generating PDF from: ${inputPath}`);
   console.log(`Page size: ${size} (${pageSize.width}mm x ${pageSize.height}mm)`);
+  console.log(`Device scale factor: ${scale}x`);
   
   const browser = await puppeteer.launch({
     headless: true,
@@ -155,7 +156,7 @@ async function convertHtmlToPdf(inputPath, outputPath, options = {}) {
     await page.setViewport({
       width: Math.round(pageSize.width * 96 / 25.4),
       height: Math.round(pageSize.height * 96 / 25.4),
-      deviceScaleFactor: 2
+      deviceScaleFactor: scale
     });
     
     // Load HTML file
@@ -222,13 +223,15 @@ function parseArgs() {
 Usage: node html_to_pdf.js <input.html> <output.pdf> [options]
 
 Options:
-  --size <size>   Page size: A4, A5, B5, A4-bleed, A5-bleed (default: A4)
-  --no-gs         Skip Ghostscript post-processing
-  --help, -h      Show this help
+  --size <size>    Page size: A4, A5, B5, A4-bleed, A5-bleed (default: A4)
+  --scale <n>      Device scale factor for rendering (default: 2, max: 4)
+  --no-gs          Skip Ghostscript post-processing
+  --help, -h       Show this help
 
 Examples:
   node html_to_pdf.js flyer.html flyer.pdf
   node html_to_pdf.js flyer.html flyer.pdf --size A4-bleed
+  node html_to_pdf.js flyer.html flyer.pdf --scale 4
   node html_to_pdf.js flyer.html flyer.pdf --no-gs
 `);
     process.exit(args.includes('--help') || args.includes('-h') ? 0 : 1);
@@ -238,22 +241,30 @@ Examples:
   const outputPath = args[1];
   let size = 'A4';
   let useGhostscript = true;
-  
+  let scale = 2;
+
   for (let i = 2; i < args.length; i++) {
     if (args[i] === '--size' && args[i + 1]) {
       size = args[i + 1];
+      i++;
+    } else if (args[i] === '--scale' && args[i + 1]) {
+      scale = parseInt(args[i + 1], 10);
+      if (isNaN(scale) || scale < 1 || scale > 4) {
+        console.error('Error: --scale must be 1-4');
+        process.exit(1);
+      }
       i++;
     } else if (args[i] === '--no-gs') {
       useGhostscript = false;
     }
   }
-  
-  return { inputPath, outputPath, size, useGhostscript };
+
+  return { inputPath, outputPath, size, useGhostscript, scale };
 }
 
 // Main
-const { inputPath, outputPath, size, useGhostscript } = parseArgs();
-convertHtmlToPdf(inputPath, outputPath, { size, useGhostscript })
+const { inputPath, outputPath, size, useGhostscript, scale } = parseArgs();
+convertHtmlToPdf(inputPath, outputPath, { size, useGhostscript, scale })
   .catch(err => {
     console.error(`Error: ${err.message}`);
     process.exit(1);

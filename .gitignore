@@ -9,7 +9,11 @@ image/
 sources/
 references/chirasi-examples/
 
+# 外部プロジェクト（独自.git管理）
+Blue Earth Alliance Leaflet/
+
 # ローカル環境固有
 .serena/
 .claude/
+.playwright-mcp/
 CLAUDE.md
